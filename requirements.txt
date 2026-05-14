@@ -10,3 +10,4 @@ python-jose
 slowapi
 reportlab
 cryptography
+streamlit
