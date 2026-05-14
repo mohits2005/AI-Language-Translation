@@ -134,17 +134,6 @@ def translate(request: Request, req: TranslationRequest, user=Depends(get_curren
         "target_language": req.target_lang
     }
 
-@app.get("/history")
-def get_history(user=Depends(get_current_user)):
-
-    db = SessionLocal()
-
-    logs = db.query(TranslationLog).filter(
-    TranslationLog.user_id == user["user_id"]).all()
-    
-    db.close()
-
-    return logs
 
 @app.post("/register")
 def register(user: UserRegister):
@@ -219,7 +208,18 @@ def login(user: UserLogin):
         "access_token": token,
         "token_type": "bearer"
     }
+
+@app.get("/history")
+def get_history(user=Depends(get_current_user)):
+
+    db = SessionLocal()
+
+    logs = db.query(TranslationLog).filter(
+    TranslationLog.user_id == user["user_id"]).all()
     
+    db.close()
+
+    return logs
 
 @app.get("/export-history")
 def export_history(
