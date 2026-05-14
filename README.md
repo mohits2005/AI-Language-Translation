@@ -77,6 +77,55 @@ ALGORITHM=HS256
 
 5. Run the Server using python -m main:app --reload
 
+OR YOU CAN EASILY USE setup.py --
+
+## Automated Project Setup
+
+This project includes an automated setup script named `setup.py`
+that simplifies the initial project configuration process for new users.
+
+The script automatically performs the following tasks:
+
+- Creates the MySQL database if it does not already exist
+- Creates all required database tables using SQLAlchemy models
+- Checks whether required Python packages are installed
+- Automatically installs missing dependencies
+- Prepares the project environment for execution
+
+This reduces manual setup steps and allows users to configure the project quickly on their local system.
+
+### How to Run Setup
+
+Before running the application, update the database password inside:
+
+setup.py
+
+Replace:
+
+DB_PASSWORD = "YOUR_PASSWORD"
+
+with your actual MySQL password.
+
+Then execute:
+
+python setup.py
+
+After successful setup, start the backend server using:
+
+uvicorn main:app --reload
+
+Run the Streamlit frontend using:
+
+streamlit run Frontend/ui.py
+
+### Benefits of setup.py
+
+- Simplifies project installation
+- Reduces configuration errors
+- Automatically prepares the database schema
+- Improves portability of the project
+- Makes the project easier for third-party users to run
+
 API Documentation
 
 After running the server you can access the Swagger Docs at http://127.0.0.1:8000/docs
