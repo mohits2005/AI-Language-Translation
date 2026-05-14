@@ -83,8 +83,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-API_BASE_URL = "http://127.0.0.1:8000"
-
+API_BASE_URL = "https://ai-language-translation-backendd.onrender.com"
+#http://127.0.0.1:8000
 # ---------------- SIDEBAR ---------------- #
 with st.sidebar:
     st.markdown("# 🌍 AI Translation")
