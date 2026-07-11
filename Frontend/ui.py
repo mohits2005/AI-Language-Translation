@@ -216,42 +216,53 @@ languages = {
 } # Add more as needed
 
 st.write("")
-left, right = st.columns([2, 1])
 
-with left:
-    st.markdown("## 🌍 Translate Text")
-    src = st.selectbox(
+st.markdown("## 🌍 Translate Text")
+
+src = st.selectbox(
     "Source",
     options=list(languages.keys()),
     index=0,
     placeholder="Search source language..."
 )
 
-    tgt = st.selectbox(
+tgt = st.selectbox(
     "Target",
     options=list(languages.keys()),
     index=1,
     placeholder="Search target language..."
 )
-    text = st.text_area("Enter Text", height=150)
 
-    if st.button("Translate Now", use_container_width=True):
-        if "token" not in st.session_state:
-            st.error("Please login first")
-        elif text.strip():
-            try:
-                headers = {"Authorization": f"Bearer {st.session_state['token']}"}
-                resp = requests.post(f"{API_BASE_URL}/translate", headers=headers,
-                                   json={"text": text, "source_lang": languages[src], "target_lang": languages[tgt]})
-                res_data = resp.json()
-                st.markdown(f'<div class="result-box">{res_data.get("translated_text", "Error in response")}</div>', unsafe_allow_html=True)
-            except:
-                st.error("Translation failed")
+text = st.text_area("Enter Text", height=150)
 
-with right:
-    st.markdown("## 📘 Project Highlights")
-    for item in ["Secure JWT Auth", "History Logging", "Protected APIs", "PDF Export", "MySQL Integration", "FastAPI REST"]:
-        st.markdown(f'<div class="feature-card">{item}</div>', unsafe_allow_html=True)
+if st.button("Translate Now", use_container_width=True):
+    if "token" not in st.session_state:
+        st.error("Please login first")
+    elif text.strip():
+        try:
+            headers = {
+                "Authorization": f"Bearer {st.session_state['token']}"
+            }
+
+            resp = requests.post(
+                f"{API_BASE_URL}/translate",
+                headers=headers,
+                json={
+                    "text": text,
+                    "source_lang": languages[src],
+                    "target_lang": languages[tgt]
+                }
+            )
+
+            res_data = resp.json()
+
+            st.markdown(
+                f'<div class="result-box">{res_data.get("translated_text", "Error in response")}</div>',
+                unsafe_allow_html=True
+            )
+
+        except:
+            st.error("Translation failed")
 
 # ---------------- HISTORY SECTION (AS SEEN IN SCREENSHOT) ---------------- #
 st.markdown('<div class="section-header">📜 Translation History</div>', unsafe_allow_html=True)
@@ -294,7 +305,7 @@ st.markdown("---")
 st.markdown(
     """
     <div style="text-align:center; color:#64748b; padding:20px;">
-        AI Language Translation Platform • BCA Major Project • Developed using FastAPI and Streamlit
+        AI Language Translation Platform • Developed using FastAPI and Streamlit
     </div>
     """,
     unsafe_allow_html=True
